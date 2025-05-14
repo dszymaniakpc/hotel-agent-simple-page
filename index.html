@@ -1,163 +1,746 @@
-<style>
-/* Chat message styling */
-#chat-widget-body .bot-message {
-    background-color: #854fff;
-    color: white;
-    border-radius: 15px 15px 0 15px;
-    padding: 12px 16px;
-    margin-bottom: 16px;
-    max-width: 85%;
-    align-self: flex-start;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-#chat-widget-body .user-message {
-    background-color: #f1f1f1;
-    color: #333;
-    border-radius: 15px 15px 15px 0;
-    padding: 12px 16px;
-    margin-bottom: 16px;
-    max-width: 85%;
-    align-self: flex-end;
-    margin-left: auto;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-/* Styling for information categories */
-.info-category {
-    margin-bottom: 16px;
-}
-
-.category-title {
-    font-weight: bold;
-    margin-bottom: 6px;
-    color: #ffffff;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-    padding-bottom: 4px;
-}
-
-.activity-item {
-    margin-bottom: 10px;
-    padding-left: 8px;
-}
-
-.activity-name {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 2px;
-}
-
-.activity-details {
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 13px;
-    opacity: 0.9;
-}
-
-.activity-detail {
-    margin-right: 12px;
-    margin-bottom: 3px;
-}
-
-.detail-label {
-    font-weight: 500;
-    margin-right: 3px;
-}
-
-/* Update chat widget container for better display */
-#chat-widget-body {
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-}
-
-/* Styling for the bottom action bar */
-.action-bar {
-    display: flex;
-    margin-top: 10px;
-    gap: 8px;
-}
-
-.action-button {
-    background-color: rgba(255,255,255,0.25);
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.action-button:hover {
-    background-color: rgba(255,255,255,0.35);
-}
-</style>
-
-<!-- Example of improved message format -->
-<div id="chat-widget-body">
-    <!-- User message example -->
-    <div class="user-message">
-        What activities and facilities are available at the resort?
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hilton Marsa Alam Nubian Resort</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/geist-font/1.0.0/fonts/geist-sans/style.min.css">
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background-color: #004b87;
+            color: white;
+            padding: 20px 0;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* Hero section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/api/placeholder/1200/500') center/cover no-repeat;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: #f5a623;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .button:hover {
+            background-color: #e69212;
+        }
+        
+        /* Main content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #004b87;
+            margin-bottom: 15px;
+        }
+        
+        /* Rooms section */
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .room-card {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .room-image {
+            height: 200px;
+            background-color: #eee;
+            background-image: url('/api/placeholder/400/200');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .room-details {
+            padding: 20px;
+        }
+        
+        .room-details h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #004b87;
+        }
+        
+        .room-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #f5a623;
+            margin-bottom: 15px;
+        }
+        
+        /* Amenities section */
+        .amenities-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        
+        .amenity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        
+        .amenity-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #004b87;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+        
+        /* About section */
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .about-image {
+            height: 100%;
+            min-height: 300px;
+            background-color: #eee;
+            background-image: url('/api/placeholder/600/400');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #00284d;
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        /* Chat Widget Styling */
+        #chat-widget-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        #chat-widget-header {
+            background: #854fff;
+            color: white;
+            padding: 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+        }
+        .header-title-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .chat-logo {
+            height: 24px;
+            width: auto;
+            object-fit: contain;
+        }
+        #chat-widget-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        /* Increased spacing between messages */
+        #chat-widget-body p {
+            margin-bottom: 15px; /* Adjust spacing between messages */
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        #chat-widget-footer {
+            padding: 12px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+        }
+        #chat-widget-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+        #chat-widget-send {
+            background: #854fff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        /* Make the chat bubble a perfect circle */
+        #chat-widget-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #854fff;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">Hilton Marsa Alam</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Rooms</a></li>
+                    <li><a href="#">Dining</a></li>
+                    <li><a href="#">Facilities</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Experience Luxury on the Red Sea</h1>
+            <p>Welcome to Hilton Marsa Alam Nubian Resort, where pristine beaches meet exceptional service</p>
+            <a href="#" class="button">Book Now</a>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Rooms Section -->
+        <div class="section-title">
+            <h2>Our Rooms & Suites</h2>
+            <p>Choose from our selection of luxurious accommodations</p>
+        </div>
+        
+        <div class="rooms-grid">
+            <div class="room-card">
+                <div class="room-image"></div>
+                <div class="room-details">
+                    <h3>Deluxe Sea View</h3>
+                    <div class="room-price">From $180 per night</div>
+                    <p>Spacious room with breathtaking views of the Red Sea, featuring a private balcony and modern amenities.</p>
+                    <a href="#" class="button">View Details</a>
+                </div>
+            </div>
+            
+            <div class="room-card">
+                <div class="room-image"></div>
+                <div class="room-details">
+                    <h3>Pool Access Suite</h3>
+                    <div class="room-price">From $250 per night</div>
+                    <p>Luxury suite with direct access to a semi-private pool, perfect for couples seeking privacy and comfort.</p>
+                    <a href="#" class="button">View Details</a>
+                </div>
+            </div>
+            
+            <div class="room-card">
+                <div class="room-image"></div>
+                <div class="room-details">
+                    <h3>Family Bungalow</h3>
+                    <div class="room-price">From $320 per night</div>
+                    <p>Spacious bungalow with two bedrooms, ideal for families looking for a comfortable and convenient stay.</p>
+                    <a href="#" class="button">View Details</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Amenities Section -->
+        <div class="section-title">
+            <h2>Resort Amenities</h2>
+            <p>Enjoy our wide range of world-class facilities</p>
+        </div>
+        
+        <div class="amenities-list">
+            <div class="amenity-item">
+                <div class="amenity-icon">🏊</div>
+                <div>
+                    <h3>Swimming Pools</h3>
+                    <p>Multiple pools including infinity and children's pools</p>
+                </div>
+            </div>
+            
+            <div class="amenity-item">
+                <div class="amenity-icon">🍽️</div>
+                <div>
+                    <h3>Restaurants & Bars</h3>
+                    <p>5 restaurants and 3 bars with international cuisine</p>
+                </div>
+            </div>
+            
+            <div class="amenity-item">
+                <div class="amenity-icon">💆</div>
+                <div>
+                    <h3>Spa & Wellness</h3>
+                    <p>Full-service spa with traditional and modern treatments</p>
+                </div>
+            </div>
+            
+            <div class="amenity-item">
+                <div class="amenity-icon">🏄</div>
+                <div>
+                    <h3>Water Activities</h3>
+                    <p>Diving, snorkeling, and various water sports</p>
+                </div>
+            </div>
+            
+            <div class="amenity-item">
+                <div class="amenity-icon">👶</div>
+                <div>
+                    <h3>Kids Club</h3>
+                    <p>Supervised activities for children of all ages</p>
+                </div>
+            </div>
+            
+            <div class="amenity-item">
+                <div class="amenity-icon">🏋️</div>
+                <div>
+                    <h3>Fitness Center</h3>
+                    <p>Modern gym equipment and fitness classes</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- About Section -->
+        <div class="section-title">
+            <h2>About Our Resort</h2>
+            <p>Discover the Hilton Marsa Alam Nubian experience</p>
+        </div>
+        
+        <div class="about-section">
+            <div>
+                <p>Located on the pristine shores of the Red Sea, Hilton Marsa Alam Nubian Resort offers a perfect blend of luxury, comfort, and authentic Nubian culture.</p>
+                
+                <p>Our resort features 395 elegantly appointed rooms and suites, each designed to provide maximum comfort and relaxation. Guests can enjoy our private beach, multiple swimming pools, and a range of dining options serving international and local cuisines.</p>
+                
+                <p>The resort is ideally situated just 30 minutes from Marsa Alam International Airport and offers easy access to the region's famous diving spots, including Elphinstone Reef and Sataya Dolphin Reef.</p>
+                
+                <p>Whether you're seeking a romantic getaway, a family vacation, or an adventure-filled holiday, our dedicated staff is committed to ensuring your stay is nothing short of exceptional.</p>
+            </div>
+            
+            <div class="about-image"></div>
+        </div>
     </div>
     
-    <!-- Bot response with improved formatting -->
-    <div class="bot-message">
-        <p>Here are the activities and facilities you can enjoy at our resort:</p>
-        
-        <div class="info-category">
-            <div class="category-title">Health & Wellness</div>
-            <div class="activity-item">
-                <span class="activity-name">Clinic</span>
-                <div class="activity-details">
-                    <span class="activity-detail"><span class="detail-label">Location:</span> Building 11</span>
-                    <span class="activity-detail"><span class="detail-label">Hours:</span> On call</span>
-                    <span class="activity-detail">Doctor available (paid service)</span>
-                </div>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>Km 67 Quseir Road</li>
+                    <li>Marsa Alam, Red Sea, Egypt</li>
+                    <li>Phone: +20 65 3750 070</li>
+                    <li>Email: info@hiltonmarsaalam.com</li>
+                </ul>
             </div>
-            <div class="activity-item">
-                <span class="activity-name">Massage Center</span>
-                <div class="activity-details">
-                    <span class="activity-detail"><span class="detail-label">Hours:</span> 09:00-19:00</span>
-                    <span class="activity-detail">Not included in All Inclusive</span>
-                </div>
+            
+            <div class="footer-column">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="#">Rooms & Suites</a></li>
+                    <li><a href="#">Special Offers</a></li>
+                    <li><a href="#">Dining Options</a></li>
+                    <li><a href="#">Spa & Wellness</a></li>
+                    <li><a href="#">Activities</a></li>
+                </ul>
             </div>
-        </div>
-        
-        <div class="info-category">
-            <div class="category-title">Family & Kids</div>
-            <div class="activity-item">
-                <span class="activity-name">Kids Club</span>
-                <div class="activity-details">
-                    <span class="activity-detail"><span class="detail-label">Location:</span> Kids Area</span>
-                    <span class="activity-detail"><span class="detail-label">Hours:</span> 10:00-12:30, 15:00-16:30</span>
-                    <span class="activity-detail">For ages 4-10, included in All Inclusive</span>
-                </div>
+            
+            <div class="footer-column">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cancellation Policy</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
             </div>
-        </div>
-        
-        <div class="info-category">
-            <div class="category-title">Pools & Beaches</div>
-            <div class="activity-item">
-                <span class="activity-name">Main Pool</span>
-                <div class="activity-details">
-                    <span class="activity-detail">No reserving loungers (cleared after 45min)</span>
-                </div>
-            </div>
-            <div class="activity-item">
-                <span class="activity-name">Splash Pool</span>
-                <div class="activity-details">
-                    <span class="activity-detail">Family friendly, supervised</span>
-                </div>
+            
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">TripAdvisor</a></li>
+                </ul>
             </div>
         </div>
         
-        <div class="action-bar">
-            <button class="action-button">Book Activity</button>
-            <button class="action-button">See All Facilities</button>
+        <div class="copyright">
+            &copy; 2025 Hilton Marsa Alam Nubian Resort. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Chat Widget Button -->
+    <button id="chat-widget-button">💬</button>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget-container">
+        <div id="chat-widget-header">
+            <div class="header-title-container">
+                <img class="chat-logo" src="https://w7.pngwing.com/pngs/205/164/png-transparent-hotel-motel-gratis-hotel-text-presentation-logo-thumbnail.png" alt="Hotel logo">
+                <span id="chat-widget-title">Chat</span>
+            </div>
+            <button onclick="closeChatWidget()">✖</button>
+        </div>
+        <div id="chat-widget-body">
+            <p style="margin-bottom: 20px;"><strong id="chat-welcome-message">Hi 👋, how can we help?</strong></p>
+        </div>
+        <div id="chat-widget-footer">
+            <input type="text" id="chat-widget-input" placeholder="Type your message here...">
+            <button id="chat-widget-send">Send</button>
         </div>
     </div>
-</div>
+
+    <!-- Chat Widget Script -->
+    <script>
+        window.ChatWidgetConfig = {
+            webhook: {
+                url: 'https://n8n.pragmaticcoders.com/webhook/824ecb0e-7be5-47d7-9c36-b58af5437cf8/chat',
+                route: 'general'
+            },
+            style: {
+                primaryColor: '#ffffff',
+                secondaryColor: '#ffffff',
+                position: 'left',
+                backgroundColor: '#ffffff',
+                fontColor: '#ffffff'
+            }
+        };
+
+        // Function to update widget with data from API
+function updateWidgetWithData(data) {
+    // Update title
+    if (data.title) {
+        document.getElementById('chat-widget-title').textContent = data.title;
+    }
+    
+    // Update welcome message
+    if (data.welcomeMessage) {
+        document.getElementById('chat-welcome-message').innerHTML = data.welcomeMessage;
+    }
+    
+    // Apply CSS styling if provided
+    if (data.css) {
+        // Find existing dynamic style element or create a new one
+        let styleElement = document.getElementById('dynamic-chat-styles');
+        if (!styleElement) {
+            styleElement = document.createElement('style');
+            styleElement.id = 'dynamic-chat-styles';
+            document.head.appendChild(styleElement);
+        }
+        
+        // Update the style element with the new CSS
+        styleElement.textContent = data.css;
+    }
+    
+    // For backward compatibility, still handle the legacy styles object if it exists
+    else if (data.styles) {
+        let dynamicStyles = '';
+        
+        if (data.styles.primaryColor) {
+            dynamicStyles += `
+                #chat-widget-button, 
+                #chat-widget-send { 
+                    background: ${data.styles.primaryColor}; 
+                }
+            `;
+        }
+        
+        if (data.styles.headerBackground) {
+            dynamicStyles += `
+                #chat-widget-header { 
+                    background: ${data.styles.headerBackground}; 
+                }
+            `;
+        }
+        
+        if (data.styles.messageBackground) {
+            dynamicStyles += `
+                #chat-widget-body p:nth-child(even) { 
+                    background: ${data.styles.messageBackground}; 
+                }
+            `;
+        }
+        
+        if (data.styles.fontColor) {
+            dynamicStyles += `
+                #chat-widget-header,
+                #chat-widget-send { 
+                    color: ${data.styles.fontColor}; 
+                }
+            `;
+        }
+        
+        // If logo URL is provided in styles
+        if (data.styles.logoUrl) {
+            dynamicStyles += `
+                .chat-logo {
+                    content: url("${data.styles.logoUrl}");
+                }
+            `;
+        }
+        
+        // Logo size customization if provided
+        if (data.styles.logoHeight) {
+            dynamicStyles += `
+                .chat-logo {
+                    height: ${data.styles.logoHeight}px;
+                }
+            `;
+        }
+        
+        // Add the dynamic styles to the document
+        let styleElement = document.getElementById('dynamic-chat-styles');
+        if (!styleElement) {
+            styleElement = document.createElement('style');
+            styleElement.id = 'dynamic-chat-styles';
+            document.head.appendChild(styleElement);
+        }
+        styleElement.textContent = dynamicStyles;
+    }}
+    
+    //console.log('Widget updated with the following data:', data);
+
+        // Function to perform GET HTTP call when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            // Make a GET request to the specified endpoint
+            fetch('https://n8n.pragmaticcoders.com/webhook/21f4c53e-d7f6-46ba-be22-2f3afa8a8b99')
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                // Update the widget with the received data
+                updateWidgetWithData(data);
+            })
+            .catch(error => {
+                console.error('Error making GET request:', error);
+            });
+        });
+
+        // Function to generate or retrieve a unique chat ID
+        function getChatId() {
+            let chatId = sessionStorage.getItem("chatId");
+            if (!chatId) {
+                chatId = "chat_" + Math.random().toString(36).substr(2, 9); // Unique ID
+                sessionStorage.setItem("chatId", chatId);
+            }
+            return chatId;
+        }
+
+        // Show chat widget and hide bubble
+        document.getElementById("chat-widget-button").addEventListener("click", function() {
+            document.getElementById("chat-widget-container").style.display = "flex";
+            document.getElementById("chat-widget-button").style.display = "none";
+        });
+
+        // Close chat widget and show bubble
+        function closeChatWidget() {
+            document.getElementById("chat-widget-container").style.display = "none";
+            document.getElementById("chat-widget-button").style.display = "flex";
+        }
+
+        // Send message to n8n webhook
+        document.getElementById("chat-widget-send").addEventListener("click", function() {
+            let message = document.getElementById("chat-widget-input").value;
+            if (message.trim() === "") return;
+
+            let chatBody = document.getElementById("chat-widget-body");
+            let newMessage = document.createElement("p");
+            newMessage.textContent = message;
+            newMessage.style.color = "#333";
+            newMessage.style.background = "#f1f1f1";
+            chatBody.appendChild(newMessage);
+
+            let chatId = getChatId(); // Retrieve the session chat ID
+
+            fetch(window.ChatWidgetConfig.webhook.url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chatId: chatId,  // Attach chat ID for memory tracking
+                    message: message,
+                    route: window.ChatWidgetConfig.webhook.route
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                let botMessage = document.createElement("p");
+                botMessage.innerHTML = data.output || "Sorry, I couldn't understand that.";
+                botMessage.style.color = "#fff";
+                botMessage.style.background = "#854fff";
+                botMessage.style.marginTop = "10px";
+                chatBody.appendChild(botMessage);
+                
+                // Automatically scroll to the bottom of the chat
+                chatBody.scrollTop = chatBody.scrollHeight;
+            })
+            .catch(error => console.error("Error:", error));
+
+            document.getElementById("chat-widget-input").value = "";
+        });
+        
+        // Add event listener for Enter key on input field
+        document.getElementById("chat-widget-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("chat-widget-send").click();
+            }
+        });
+    </script>
+</body>
+</html>
